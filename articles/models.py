@@ -16,9 +16,9 @@ class Article(models.Model):
         return self.title
 
 
-class Article_topic(models.Model):
-    name = models.CharField(max_length=50, verbose_name='Раздел')
-    relationships = models.ManyToManyField(Article, through='Relationship')
+class Tag(models.Model):
+    name = models.CharField(max_length=250)
+    article = models.ManyToManyField(Article, through='ArticleTag')
 
     class Meta:
         verbose_name = 'Тематики статьи'
@@ -28,6 +28,6 @@ class Article_topic(models.Model):
         return self.name
 
 
-class Relationship(models.Model):
-    article_topics = models.ForeignKey(Article_topic, on_delete=models.CASCADE, related_name='scopes')
-    articles = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='scopes')
+class ArticleTag(models.Model):
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE, related_name='scopes')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='scopes')
