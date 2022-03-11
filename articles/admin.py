@@ -2,12 +2,13 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.forms import BaseInlineFormSet
 
-from .models import Article, Object, Relationship
+from .models import Article, Article_topic, Relationship
 
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'text', 'published_at', 'image']
+    #list_display = ['id', 'title', 'text', 'published_at', 'image']
+    pass
 
 
 class RelationshipInlineFormset(BaseInlineFormSet):
@@ -28,6 +29,6 @@ class RelationshipInline(admin.TabularInline):
     formset = RelationshipInlineFormset
 
 
-@admin.register(Object)
-class ObjectAdmin(admin.ModelAdmin):
+@admin.register(Article_topic)
+class Article_topicAdmin(admin.ModelAdmin):
     inlines = [RelationshipInline, ]

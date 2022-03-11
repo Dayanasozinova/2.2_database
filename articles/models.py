@@ -16,21 +16,18 @@ class Article(models.Model):
         return self.title
 
 
-class Object(models.Model):
-    name = models.CharField(max_length=50, verbose_name='Тематики статьи')
-    relationshipss = models.ManyToManyField(Article, through='Relationship')
+class Article_topic(models.Model):
+    name = models.CharField(max_length=50, verbose_name='Раздел')
+    relationships = models.ManyToManyField(Article, through='Relationship')
 
     class Meta:
         verbose_name = 'Тематики статьи'
         verbose_name_plural = 'Тематики статьи'
-
 
     def __str__(self):
         return self.name
 
 
 class Relationship(models.Model):
-    objects = models.ForeignKey(Object, on_delete=models.CASCADE, related_name='relationships')
-    articles = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='relationships')
-
-
+    article_topics = models.ForeignKey(Article_topic, on_delete=models.CASCADE, related_name='scopes')
+    articles = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='scopes')
