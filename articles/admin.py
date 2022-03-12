@@ -23,10 +23,11 @@ class ArticleTagInline(admin.TabularInline):
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'text', 'published_at', 'image']
+    inlines = [ArticleTagInline, ]
 
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ['id']
-    inlines = [ArticleTagInline, ]
+    list_display = ['name']
+
 

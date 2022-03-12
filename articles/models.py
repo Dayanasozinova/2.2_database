@@ -24,8 +24,8 @@ class Tag(models.Model):
     #     verbose_name = 'Тематики статьи'
     #     verbose_name_plural = 'Тематики статьи'
     #
-    # def __str__(self):
-    #     return self.name
+    def __str__(self):
+        return self.name
 
 
 class ArticleTag(models.Model):
@@ -36,7 +36,4 @@ class ArticleTag(models.Model):
     class Meta:
         verbose_name = 'Тематики статьи'
         verbose_name_plural = 'Тематики статьи'
-
-    def __str__(self):
-        return self.name
 
