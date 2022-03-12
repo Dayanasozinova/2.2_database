@@ -17,8 +17,21 @@ class Article(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250, verbose_name='Раздел')
     article = models.ManyToManyField(Article, through='ArticleTag')
+
+    # class Meta:
+    #     verbose_name = 'Тематики статьи'
+    #     verbose_name_plural = 'Тематики статьи'
+    #
+    # def __str__(self):
+    #     return self.name
+
+
+class ArticleTag(models.Model):
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE, related_name='scopes')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='scopes')
+    is_main = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Тематики статьи'
@@ -27,7 +40,3 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
-
-class ArticleTag(models.Model):
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE, related_name='scopes')
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='scopes')

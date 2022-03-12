@@ -4,31 +4,29 @@ from django.forms import BaseInlineFormSet
 
 from .models import Article, ArticleTag, Tag
 
-
-@admin.register(Article)
-class ArticleAdmin(admin.ModelAdmin):
-    #list_display = ['id', 'title', 'text', 'published_at', 'image']
-    pass
-
-
-class RelationshipInlineFormset(BaseInlineFormSet):
+class ArticleTagInlineFormset(BaseInlineFormSet):
     def clean(self):
         for form in self.forms:
-            # В form.cleaned_data будет словарь с данными
-            # каждой отдельной формы, которые вы можете проверить
+            # В form.cleaned_data будет словарь с данными каждой отдельной формы, которые вы можете проверить
             form.cleaned_data
-            # вызовом исключения ValidationError можно указать админке о наличие ошибки
-            # таким образом объект не будет сохранен,
+            # вызовом исключения ValidationError можно указать админке о наличие ошибки таким образом объект не будет сохранен,
             # а пользователю выведется соответствующее сообщение об ошибке
             raise ValidationError('Тут всегда ошибка')
         return super().clean()  # вызываем базовый код переопределяемого метода
 
 
-class RelationshipInline(admin.TabularInline):
+class ArticleTagInline(admin.TabularInline):
     model = ArticleTag
-    formset = RelationshipInlineFormset
+    extra = 3
+    formset = ArticleTagInlineFormset
+
+@admin.register(Article)
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'text', 'published_at', 'image']
 
 
 @admin.register(Tag)
-class Article_topicAdmin(admin.ModelAdmin):
-    inlines = [RelationshipInline, ]
+class TagAdmin(admin.ModelAdmin):
+    list_display = ['id']
+    inlines = [ArticleTagInline, ]
+
